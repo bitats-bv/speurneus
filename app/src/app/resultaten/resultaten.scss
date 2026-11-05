@@ -1,0 +1,83 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gekozen {
+  outline: 3px solid #ff9933;
+  background: #fff4cc;
+}
+
+.kindregel {
+  display: grid;
+  grid-template-columns: auto 1fr auto 8rem 6rem;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 0.5rem;
+  font: inherit;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  color: inherit;
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.score {
+  font-weight: 600;
+  text-align: right;
+}
+
+.details {
+  background: #fafafa;
+  padding: 0.5rem 1rem 1rem;
+  text-align: left;
+}
+
+.sessie {
+  margin-top: 0.75rem;
+}
+
+.kop {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: 0.85rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.5rem;
+  background: #eee;
+}
+
+ol {
+  margin: 0.4rem 0 0;
+  padding-left: 1.5rem;
+}
+
+li {
+  padding: 0.2rem 0;
+  span:first-child {
+    font-weight: 700;
+    margin-right: 0.4rem;
+  }
+  img {
+    height: 1.8rem;
+    vertical-align: middle;
+    margin: 0 0.5rem;
+  }
+}
+
+li.juist span:first-child {
+  color: #1b8a3a;
+}
+li.mis span:first-child {
+  color: #b00020;
+}

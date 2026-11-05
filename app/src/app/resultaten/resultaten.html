@@ -1,0 +1,85 @@
+<header class="balk">
+  <a routerLink="/" class="knop licht">← Terug</a>
+  <h1>Resultaten</h1>
+  <span></span>
+</header>
+
+<section class="kaart filters">
+  <div class="rij">
+    @for (klas of klassen(); track klas.id) {
+      <button
+        class="knop licht"
+        [class.gekozen]="klasId() === klas.id"
+        (click)="klasId.set(klas.id)"
+      >
+        {{ klas.naam }}
+      </button>
+    } @empty {
+      <p class="zacht">Nog geen klassen.</p>
+    }
+  </div>
+  <div class="rij">
+    <button class="knop licht" [class.gekozen]="themaId() === null" (click)="themaId.set(null)">
+      Alle thema's
+    </button>
+    @for (thema of themas(); track thema.id) {
+      <button
+        class="knop licht"
+        [class.gekozen]="themaId() === thema.id"
+        (click)="themaId.set(thema.id)"
+      >
+        {{ thema.naam }}
+      </button>
+    }
+  </div>
+</section>
+
+<section class="kaart">
+  @for (r of overzicht(); track r.kind.id) {
+    <button class="kindregel" (click)="wissel(r.kind.id)" [disabled]="r.sessies.length === 0">
+      <app-kind-avatar [kind]="r.kind" style="--maat: 2.5rem" />
+      <strong>{{ r.kind.voornaam }}</strong>
+      <span class="zacht">{{ r.sessies.length }} sessie(s)</span>
+      @if (r.procent !== null) {
+        <span class="score">{{ r.juist }}/{{ r.totaal }} · {{ r.procent }}%</span>
+        <span class="zacht">{{ r.laatst | date: 'd/M HH:mm' }}</span>
+      } @else {
+        <span class="zacht">–</span>
+        <span></span>
+      }
+    </button>
+
+    @if (open() === r.kind.id) {
+      <div class="details">
+        @for (s of r.sessies; track s.sessie.id) {
+          <div class="sessie">
+            <div class="kop">
+              <strong>{{ themaNaam(s.sessie.themaId) }}</strong>
+              <span class="zacht">{{ s.sessie.start | date: 'd/M/yyyy HH:mm' }}</span>
+              <span>{{ s.juist }}/{{ s.antwoorden.length }} juist</span>
+              @if (s.sessie.status !== 'klaar') {
+                <span class="label">{{
+                  s.sessie.status === 'bezig' ? 'niet afgerond' : 'gestopt'
+                }}</span>
+              }
+            </div>
+            <ol>
+              @for (a of s.antwoorden; track a.id) {
+                <li [class.juist]="a.juist" [class.mis]="!a.juist">
+                  <span>{{ a.juist ? '✓' : '✗' }}</span>
+                  <span>{{ vraagTekst(a.themaId, a.vraagId) }}</span>
+                  @if (afbeelding(a.themaId, a.gekozenOptieId); as src) {
+                    <img [src]="src" alt="" />
+                  }
+                  <span class="zacht">{{ ((a.reactietijdMs ?? 0) / 1000).toFixed(1) }} s</span>
+                </li>
+              }
+            </ol>
+          </div>
+        }
+      </div>
+    }
+  } @empty {
+    <p class="zacht">Geen kinderen in deze klas.</p>
+  }
+</section>
