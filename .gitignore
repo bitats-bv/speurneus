@@ -22,3 +22,7 @@ exports/
 
 # Office lock-bestanden
 ~$*
+
+# Claude Code (persoonlijke instellingen)
+.claude/settings.local.json
+CLAUDE.local.md
