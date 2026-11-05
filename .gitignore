@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# Node / build
+node_modules/
+dist/
+.vite/
+*.log
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Lokale gegevens en back-ups: bevatten persoonsgegevens van kinderen (GDPR)
+# Nooit in git zetten.
+lokaal/
+backups/
+*.backup.zip
+*.obsbackup
+exports/
+
+# Office lock-bestanden
+~$*

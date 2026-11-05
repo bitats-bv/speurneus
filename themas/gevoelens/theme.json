@@ -1,0 +1,18 @@
+{
+  "id": "gevoelens",
+  "naam": "Gevoelens",
+  "icoon": "afbeeldingen/jules-blij.png",
+  "bron": "standaard",
+  "vragen": [
+    { "id": "blij",       "vraagTekst": "Waar is Jules blij?",       "vraagAudio": null, "juistAntwoordId": "blij" },
+    { "id": "boos",       "vraagTekst": "Waar is Jules boos?",       "vraagAudio": null, "juistAntwoordId": "boos" },
+    { "id": "verdrietig", "vraagTekst": "Waar is Jules verdrietig?", "vraagAudio": null, "juistAntwoordId": "verdrietig" },
+    { "id": "bang",       "vraagTekst": "Waar is Jules bang?",       "vraagAudio": null, "juistAntwoordId": "bang" }
+  ],
+  "antwoordopties": [
+    { "id": "blij",       "afbeelding": "afbeeldingen/jules-blij.png" },
+    { "id": "boos",       "afbeelding": "afbeeldingen/jules-boos.png" },
+    { "id": "verdrietig", "afbeelding": "afbeeldingen/jules-verdrietig.png" },
+    { "id": "bang",       "afbeelding": "afbeeldingen/jules-bang.png" }
+  ]
+}

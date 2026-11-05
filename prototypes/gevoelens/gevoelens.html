@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Jules Gevoelensspel</title>
+
+<style>
+body{
+    background:#EAF6FF;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    margin:0;
+    padding:20px;
+}
+
+h1{
+    color:#FF6600;
+}
+
+img{
+    width:220px;
+    margin:20px;
+    cursor:pointer;
+}
+
+#feedback{
+    font-size:40px;
+    min-height:60px;
+}
+
+button{
+    font-size:32px;
+    padding:20px 40px;
+    border-radius:20px;
+    border:none;
+    background:#ffcc00;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎈 Jules Gevoelensspel</h1>
+
+<div id="start">
+    <button onclick="startSpel()">START</button>
+</div>
+
+<div id="spel" style="display:none;">
+    <h2>👂 Luister goed</h2>
+    <button onclick="herhaalStem()">🔊 Nog eens</button>
+    <div id="afbeeldingen"></div>
+    <div id="feedback"></div>
+</div>
+
+<script>
+
+const gevoelens = [
+    {naam:"blij", bestand:"jules blij.png"},
+    {naam:"boos", bestand:"jules boos.png"},
+    {naam:"verdrietig", bestand:"jules verdrietig.png"},
+    {naam:"bang", bestand:"jules bang.png"}
+];
+
+let score = 0;
+let vraag = 0;
+let doel;
+
+function spreek(txt){
+    speechSynthesis.cancel();
+    let stem = new SpeechSynthesisUtterance(txt);
+    stem.lang = "nl-BE";
+    stem.rate = 0.8;
+    speechSynthesis.speak(stem);
+}
+
+function shuffle(array){
+    return [...array].sort(()=>Math.random()-0.5);
+}
+
+function startSpel(){
+    document.getElementById("start").style.display="none";
+    document.getElementById("spel").style.display="block";
+    volgendeVraag();
+}
+
+function herhaalStem(){
+    spreek("Waar is Jules " + doel.naam + "?");
+}
+
+function volgendeVraag(){
+
+    vraag++;
+
+    if(vraag>8){
+        document.getElementById("spel").innerHTML =
+        "<h1>🏆 Knap gewerkt!</h1>" +
+        "<h2>Je verdiende " + score + " sterren!</h2>";
+        spreek("Knap gewerkt!");
+        return;
+    }
+
+    let opties = shuffle(gevoelens).slice(0,2);
+
+    if(!opties.includes(doel)){
+        doel = opties[Math.floor(Math.random()*2)];
+    }
+
+    doel = opties[Math.floor(Math.random()*2)];
+
+    let html="";
+
+    shuffle(opties).forEach(g=>{
+
+        html += `
+        <img src="${g.bestand}"
+        onclick="controleer('${g.naam}')">
+        `;
+
+    });
+
+    document.getElementById("afbeeldingen").innerHTML = html;
+    document.getElementById("feedback").innerHTML = "";
+
+    setTimeout(()=>{
+        spreek("Waar is Jules " + doel.naam + "?");
+    },500);
+}
+
+function controleer(antwoord){
+
+    if(antwoord === doel.naam){
+
+        score++;
+
+        document.getElementById("feedback").innerHTML =
+        "⭐ Goed gedaan!";
+
+        spreek("Goed gedaan");
+
+        setTimeout(volgendeVraag,2000);
+
+    }
+    else{
+
+        document.getElementById("feedback").innerHTML =
+        "😊 Probeer nog eens";
+
+        spreek("Probeer nog eens");
+    }
+}
+
+</script>
+
+</body>
+</html>
