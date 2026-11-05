@@ -4,6 +4,7 @@ import { Home } from './home';
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'juf', loadComponent: () => import('./juf/juf').then((m) => m.JufPage) },
+  { path: 'juf/klas/:id', loadComponent: () => import('./juf/klas').then((m) => m.KlasPage) },
   { path: 'spel', loadComponent: () => import('./spel/spel').then((m) => m.SpelPage) },
   {
     path: 'resultaten',

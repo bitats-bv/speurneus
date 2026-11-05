@@ -12,3 +12,71 @@ html, body {
 body { padding: env(safe-area-inset-top) 1rem 1rem; }
 
 h1 { color: #ff6600; }
+
+/* ---------- Juf-beheer: gedeelde bouwstenen ---------- */
+
+h2 { margin: 0 0 0.5rem; font-size: 1.3rem; text-align: left; }
+
+.balk {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+.balk > :first-child { justify-self: start; }
+
+.kaart {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  max-width: 48rem;
+  margin: 0 auto 1.25rem;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.06);
+}
+
+.formulier { display: flex; flex-direction: column; gap: 0.9rem; text-align: left; }
+.formulier label:not(.knop):not(.vinkje) { display: flex; flex-direction: column; gap: 0.3rem; font-weight: 600; }
+
+input:not([type]), input[type='text'] {
+  font: inherit;
+  font-size: 1.1rem;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid #ddd;
+  border-radius: 0.8rem;
+  -webkit-user-select: text;
+  user-select: text;
+}
+input:focus { outline: none; border-color: #ff9933; }
+
+.rij { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+
+.knop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 0.7rem 1.2rem;
+  min-height: 2.75rem;
+  border: none;
+  border-radius: 0.9rem;
+  background: #ffcc00;
+  color: #222;
+  text-decoration: none;
+  cursor: pointer;
+}
+.knop.licht { background: #f0f0f0; }
+.knop.gevaar { background: #ffe1e1; color: #b00020; }
+.knop:disabled { opacity: 0.4; cursor: default; }
+
+.vinkje { display: flex; gap: 0.5rem; align-items: center; }
+.vinkje input { width: 1.3rem; height: 1.3rem; }
+
+.zacht { color: #777; }
+.klein { font-size: 0.9rem; margin: 0; }
+.fout { color: #b00020; }

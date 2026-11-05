@@ -1,0 +1,43 @@
+.kop {
+  justify-content: space-between;
+}
+
+.kinderen {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.kind {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 1rem;
+  background: #fafafa;
+  font-size: 1.05rem;
+  color: inherit;
+  cursor: pointer;
+}
+
+.kind.inactief {
+  opacity: 0.45;
+}
+
+.toevoegen input {
+  flex: 1;
+}
+
+.namenlijst {
+  text-align: left;
+  background: #fafafa;
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+}
+
+.vul {
+  flex: 1;
+}
