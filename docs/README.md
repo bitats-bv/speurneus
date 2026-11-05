@@ -4,3 +4,9 @@
   architectuur, GDPR, datamodel, flows en planning.
 - Smartschool: geen API-koppeling. Klaslijst importeren via CSV-export, resultaten
   exporteren als PDF/CSV en met de hand in Smartschool zetten.
+
+## Beslissingen
+
+- 2026-11-05: Angular 22 als frontend.
+- 2026-11-05: We starten volledig offline. Enkel lokale opslag met Dexie (IndexedDB),
+  geen backend. Synchronisatie tussen toestellen is voor later (fase 5).
