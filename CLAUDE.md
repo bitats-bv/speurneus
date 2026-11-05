@@ -26,6 +26,8 @@ Beslissingen: `docs/README.md`
   tijdsdruk, animaties < 1 s, antwoordvolgorde altijd willekeurig. Geluid pas na een eerste
   tik (iOS-beperking).
 - **Eén poging per vraag.** Een antwoord wordt meteen opgeslagen en is niet meer te wijzigen.
+- **Kind ziet nooit het resultaat.** Feedback in kind-modus is gelijk bij juist en fout;
+  scores enkel in juf-schermen.
 - Doelplatform: Safari op iPad, liggend, als beginscherm-app.
 
 ## Stack

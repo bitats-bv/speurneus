@@ -1,0 +1,76 @@
+<button class="stop" (click)="stoppen()" aria-label="Stoppen">✕</button>
+
+@switch (fase()) {
+  @case ('start') {
+    <div class="midden">
+      @if (kind(); as k) {
+        <app-kind-avatar [kind]="k" style="--maat: 10rem" />
+      }
+      <button class="groot-rond" (click)="begin()" aria-label="Start">▶</button>
+    </div>
+  }
+
+  @case ('klaar') {
+    <div class="midden">
+      <div class="feest" aria-hidden="true">🏆</div>
+      <div class="sterren" aria-hidden="true">
+        @for (r of rondes(); track $index) {
+          <span>⭐</span>
+        }
+      </div>
+      <button class="groot-rond" (click)="stoppen()" aria-label="Klaar">✓</button>
+    </div>
+  }
+
+  @case ('laden') {
+    <div class="midden"><span class="zacht">…</span></div>
+  }
+
+  @default {
+    @if (ronde(); as r) {
+      <div class="voortgang" aria-hidden="true">
+        @for (x of rondes(); track $index) {
+          <span [class.gedaan]="$index < nr() || ($index === nr() && fase() === 'antwoord')"
+            >⭐</span
+          >
+        }
+      </div>
+
+      <div class="stappen">
+        @for (s of stappen; track s.stap; let eerste = $first) {
+          @if (!eerste) {
+            <span class="pijl" aria-hidden="true">➜</span>
+          }
+          @if (s.stap === 'luisteren') {
+            <!-- Het oor is ook de knop om de vraag nog eens te horen. -->
+            <button
+              class="stap"
+              [class.actief]="stap() === s.stap"
+              (click)="herhaal()"
+              aria-label="Nog eens luisteren"
+            >
+              <img [src]="s.icoon" alt="" draggable="false" />
+            </button>
+          } @else {
+            <div class="stap" [class.actief]="stap() === s.stap" [attr.aria-label]="s.stap">
+              <img [src]="s.icoon" alt="" draggable="false" />
+            </div>
+          }
+        }
+      </div>
+
+      <div class="opties" [style.--aantal]="r.opties.length">
+        @for (optie of r.opties; track optie.id) {
+          <button
+            class="optie"
+            [class.gekozen]="gekozen() === optie.id"
+            [class.weg]="gekozen() && gekozen() !== optie.id"
+            (click)="kies(optie.id)"
+          >
+            <img [src]="optie.afbeelding" alt="" draggable="false" />
+          </button>
+        }
+      </div>
+    }
+  }
+}

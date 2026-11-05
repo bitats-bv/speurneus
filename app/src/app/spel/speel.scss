@@ -1,0 +1,154 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: calc(100vh - 2rem);
+  padding-top: 1rem;
+  box-sizing: border-box;
+}
+
+.stop {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 0.5rem);
+  right: 0.75rem;
+  font-size: 1.2rem;
+  color: #aaa;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+.midden {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.groot-rond {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  background: #ffcc00;
+  font-size: 4rem;
+  color: #222;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.feest {
+  font-size: 8rem;
+  animation: hup 0.8s ease-out;
+}
+
+.sterren,
+.voortgang {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 2rem;
+}
+
+.voortgang span {
+  filter: grayscale(1);
+  opacity: 0.3;
+  transition: all 0.4s;
+}
+.voortgang .gedaan {
+  filter: none;
+  opacity: 1;
+}
+
+.stappen {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stap {
+  width: 7.5rem; // oor is een knop: ≥ 120 pt
+  height: 7.5rem;
+  padding: 0.4rem;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.3;
+  transition:
+    opacity 0.3s,
+    transform 0.3s,
+    background 0.3s;
+  img {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+}
+.stap.actief {
+  opacity: 1;
+  background: #ffcc00;
+  transform: scale(1.12);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.15);
+}
+
+.pijl {
+  font-size: 2rem;
+  color: #bbb;
+}
+
+.opties {
+  display: grid;
+  grid-template-columns: repeat(var(--aantal), minmax(0, 15rem));
+  gap: 1.5rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.optie {
+  aspect-ratio: 1;
+  min-width: 10rem; // ≥ 120 pt tikdoel
+  padding: 0.75rem;
+  border-radius: 1.5rem;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  transition:
+    transform 0.25s,
+    opacity 0.25s;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+}
+.optie.gekozen {
+  transform: scale(1.08);
+  outline: 6px solid #ff9933;
+}
+.optie.weg {
+  opacity: 0.3;
+}
+
+@keyframes hup {
+  from {
+    transform: scale(0.3);
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  to {
+    transform: scale(1);
+  }
+}
