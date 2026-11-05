@@ -10,8 +10,8 @@ Zie [docs/README.md](docs/README.md) voor het plan van aanpak.
 
 | Map | Inhoud |
 |---|---|
-| `app/` | Broncode van de webapp (wordt opgezet in fase 1) |
-| `themas/` | Meegeleverde themapakketten: per thema een `theme.json` met `afbeeldingen/` en `audio/` |
+| `app/` | Angular 22-webapp (PWA, lokale opslag met Dexie) |
+| `app/public/themas/` | Meegeleverde themapakketten: per thema een `theme.json` met `afbeeldingen/` en `audio/` |
 | `prototypes/` | Losse eerste versies, zoals het Jules-gevoelensspel (`prototypes/gevoelens/gevoelens.html`) |
 | `bronmateriaal/` | Didactisch materiaal: ontwikkelingsdoelen per leeftijd, zintuigkaartjes |
 | `docs/` | Plan, beslissingen en notities |
@@ -26,3 +26,20 @@ Zie [docs/README.md](docs/README.md) voor het plan van aanpak.
 ## Prototype bekijken
 
 Open `prototypes/gevoelens/gevoelens.html` in Safari of Chrome.
+
+## Ontwikkelen
+
+Vereist Node.js 22 of nieuwer.
+
+```bash
+cd app
+npm install
+npm start          # http://localhost:4200
+npm test           # unit tests (Vitest)
+npm run build      # productiebuild met service worker in app/dist/
+```
+
+Testen op de iPad: start met `npx ng serve --host 0.0.0.0` en surf op de iPad naar
+`http://<ip-van-de-mac>:4200` (zelfde wifi). De service worker werkt enkel in de productiebuild.
+
+Het datamodel staat in `app/src/app/data/db.ts`.
