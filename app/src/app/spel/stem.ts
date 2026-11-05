@@ -6,6 +6,8 @@
 let speler: HTMLAudioElement | null = null;
 /** Elke nieuwe `speel` of `stop` maakt de vorige afloop ongeldig. */
 let beurt = 0;
+/** Beëindigt het wachten op een lopend audiobestand (bij `stop`). */
+let afbreken: (() => void) | null = null;
 
 export function ontgrendel(): void {
   speler ??= new Audio();
@@ -19,6 +21,8 @@ export function ontgrendel(): void {
 
 export function stop(): void {
   beurt++;
+  afbreken?.();
+  afbreken = null;
   speler?.pause();
   if ('speechSynthesis' in window) speechSynthesis.cancel();
 }
@@ -39,7 +43,10 @@ export async function speel(tekst: string, audioUrl?: string | null): Promise<bo
       await klaar;
       return mijn === beurt;
     } catch {
-      // Bestand ontbreekt of mag niet spelen: val terug op spraak.
+      // Bestand ontbreekt of mag niet spelen: wachten opruimen en terugvallen op spraak.
+      if (mijn !== beurt) return false;
+      afbreken?.();
+      afbreken = null;
     }
   }
   await spreek(tekst);
@@ -66,10 +73,27 @@ function spreek(tekst: string): Promise<void> {
   });
 }
 
+/**
+ * Wacht tot het bestand uitgespeeld is. Bewust géén `pause`-listener: het `pause`-event
+ * van een vorige `stop()` komt asynchroon binnen en zou een korte opname meteen als
+ * "klaar" laten gelden. Onderbreken loopt via `afbreken` in `stop()`.
+ */
 function wachtOp(el: HTMLAudioElement, gebeurtenis: string): Promise<void> {
   return new Promise((klaar, fout) => {
-    el.addEventListener(gebeurtenis, () => klaar(), { once: true });
-    el.addEventListener('error', () => fout(new Error('audio')), { once: true });
-    el.addEventListener('pause', () => klaar(), { once: true });
+    const ac = new AbortController();
+    const einde = () => {
+      ac.abort();
+      klaar();
+    };
+    afbreken = einde;
+    el.addEventListener(gebeurtenis, einde, { signal: ac.signal });
+    el.addEventListener(
+      'error',
+      () => {
+        ac.abort();
+        fout(new Error('audio'));
+      },
+      { signal: ac.signal },
+    );
   });
 }

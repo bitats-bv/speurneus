@@ -18,7 +18,7 @@ interface KlasRegel {
     <header class="balk">
       <a routerLink="/" class="knop licht">← Terug</a>
       <h1>Mijn klassen</h1>
-      <span></span>
+      <a routerLink="/juf/stem" class="knop licht">🎙 Stem opnemen</a>
     </header>
 
     <section class="kaart">

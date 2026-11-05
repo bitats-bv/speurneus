@@ -15,3 +15,6 @@
 
 - [Juf-stem](plannen/juf-stem.md): vragen opnemen met de eigen stem van de juf.
   Klaar om uit te voeren met `/juf-stem` in Claude Code.
+- 2026-11-05: Juf-stem: opnames van de juf staan in Dexie (tabel `opnames`, `version(2)`),
+  los van de themapakketten en gekoppeld via `themaId` + `vraagId`. De latere
+  back-up/export moet deze tabel meenemen (Blob → base64 of losse bestanden in de zip).

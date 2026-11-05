@@ -75,6 +75,17 @@ export interface Antwoord {
   tijdstip: number;
 }
 
+/** Vraag ingesproken door de juf. Los van het themapakket bewaard (pakketten zijn read-only). */
+export interface Opname {
+  id: string; // `${themaId}/${vraagId}`
+  themaId: string;
+  vraagId: string;
+  audio: Blob; // zoals opgenomen (iPad: audio/mp4 met AAC)
+  mimeType: string;
+  duurMs: number;
+  opgenomen: number; // epoch ms
+}
+
 export class SpeurneusDb extends Dexie {
   klassen!: EntityTable<Klas, 'id'>;
   kinderen!: EntityTable<Kind, 'id'>;
@@ -83,9 +94,10 @@ export class SpeurneusDb extends Dexie {
   vragen!: EntityTable<Vraag, 'id'>;
   sessies!: EntityTable<Spelsessie, 'id'>;
   antwoorden!: EntityTable<Antwoord, 'id'>;
+  opnames!: EntityTable<Opname, 'id'>;
 
-  constructor() {
-    super('speurneus');
+  constructor(naam = 'speurneus') {
+    super(naam);
     this.version(1).stores({
       klassen: 'id',
       kinderen: 'id, klasId',
@@ -95,6 +107,7 @@ export class SpeurneusDb extends Dexie {
       sessies: 'id, kindId, themaId, periodeId, start',
       antwoorden: 'id, sessieId, kindId, themaId, [kindId+themaId]',
     });
+    this.version(2).stores({ opnames: 'id, themaId' });
   }
 }
 

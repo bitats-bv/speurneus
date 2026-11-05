@@ -42,4 +42,22 @@ npm run build      # productiebuild met service worker in app/dist/
 Testen op de iPad: start met `npx ng serve --host 0.0.0.0` en surf op de iPad naar
 `http://<ip-van-de-mac>:4200` (zelfde wifi). De service worker werkt enkel in de productiebuild.
 
+### Testen met microfoon op de iPad
+
+De juf kan vragen inspreken met haar eigen stem (Juf-beheer › Stem opnemen). De browser
+geeft de microfoon enkel vrij op `https://` of `localhost`, dus via `http://<ip>:4200`
+lukt opnemen **niet** (de app toont dan een melding). Start daarom met https:
+
+```bash
+cd app
+npx ng serve --host 0.0.0.0 --ssl
+```
+
+Surf op de iPad naar `https://<ip-van-de-mac>:4200`. Safari waarschuwt voor het
+zelfondertekende certificaat: kies **Toon details › bezoek deze website** en bevestig.
+Daarna vraagt Safari bij de eerste opname toestemming voor de microfoon. Geweigerd? Zet
+ze terug aan via Instellingen › Apps › Safari › Microfoon.
+
+Opnames blijven enkel op het toestel (IndexedDB, tabel `opnames`) en horen nooit in git.
+
 Het datamodel staat in `app/src/app/data/db.ts`.

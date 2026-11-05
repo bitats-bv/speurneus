@@ -5,6 +5,14 @@ export const routes: Routes = [
   { path: '', component: Home },
   { path: 'juf', loadComponent: () => import('./juf/juf').then((m) => m.JufPage) },
   { path: 'juf/klas/:id', loadComponent: () => import('./juf/klas').then((m) => m.KlasPage) },
+  {
+    path: 'juf/stem',
+    loadComponent: () => import('./juf/stem-opnemen').then((m) => m.StemOpnemenPage),
+  },
+  {
+    path: 'juf/stem/:themaId',
+    loadComponent: () => import('./juf/stem-thema').then((m) => m.StemThemaPage),
+  },
   { path: 'spel', loadComponent: () => import('./spel/spel').then((m) => m.SpelPage) },
   {
     path: 'spel/kinderen',

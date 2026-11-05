@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { db, type Kind, type Spelsessie } from '../data/db';
+import { metOpnames, opnamesVoorThema } from '../data/opnames';
 import { bewaarAntwoord, sluitSessie, startSessie } from '../data/spelsessies';
 import { KindAvatar } from '../juf/kind-avatar';
 import { SpelInstellingenService } from './spel-instellingen';
@@ -58,6 +59,8 @@ export class SpeelPage implements OnInit, OnDestroy {
   private vraagStart = 0;
   private timer?: ReturnType<typeof setTimeout>;
   private stapTimer?: ReturnType<typeof setTimeout>;
+  /** Object-URL's van de juf-opnames, op te ruimen bij het verlaten. */
+  private opnameUrls: string[] = [];
 
   async ngOnInit(): Promise<void> {
     const inst = this.instellingen();
@@ -66,7 +69,13 @@ export class SpeelPage implements OnInit, OnDestroy {
       void this.router.navigate([inst ? '/spel/kinderen' : '/spel']);
       return;
     }
-    const thema = await laadThema(inst.themaId);
+    // Voorrang voor de vraag: eigen opname van de juf → pakketaudio → computerstem.
+    const [pakket, opnames] = await Promise.all([
+      laadThema(inst.themaId),
+      opnamesVoorThema(inst.themaId),
+    ]);
+    const { pakket: thema, urls } = metOpnames(pakket, opnames);
+    this.opnameUrls = urls;
     this.kind.set(kind);
     this.rondes.set(maakRondes(thema, inst.aantalOpties, inst.aantalVragen));
     this.fase.set('start');
@@ -76,6 +85,8 @@ export class SpeelPage implements OnInit, OnDestroy {
     clearTimeout(this.timer);
     clearTimeout(this.stapTimer);
     stem.stop();
+    this.opnameUrls.forEach((u) => URL.revokeObjectURL(u));
+    this.opnameUrls = [];
     if (this.sessie && this.fase() !== 'klaar') void sluitSessie(this.sessie.id, 'onvolledig');
   }
 

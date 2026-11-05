@@ -1,6 +1,6 @@
 # Plan: de juf neemt de vragen op met haar eigen stem
 
-Status: **klaar om uit te voeren** — wacht op go van Birger (`/juf-stem` in Claude Code).
+Status: **uitgevoerd** (2026-11-05). Nog te testen op een echte iPad: zie de open criteria.
 
 ## Doel
 
@@ -137,18 +137,24 @@ dat plan dat de tabel `opnames` erbij hoort (Blob → base64 of losse bestanden 
 
 ## Acceptatiecriteria
 
+Afgevinkt = nagegaan met unit tests of build. Open = enkel na te gaan in de browser of op
+een echte iPad.
+
 - [ ] In juf-beheer staat "Stem opnemen"; per thema zie ik alle vragen met hun status.
+      *(gebouwd; niet visueel getest)*
 - [ ] Ik kan een vraag opnemen, beluisteren, opnieuw opnemen en wissen.
-- [ ] Een opname stopt vanzelf na 15 s; de microfoon gaat uit na elke opname.
-- [ ] Weigert de juf de microfoon, dan verschijnt een duidelijke Nederlandse uitleg en
-      crasht er niets.
+      *(opslag, overschrijven en wissen getest in `opnames.spec.ts`; knoppen niet getest)*
+- [x] Een opname stopt vanzelf na 15 s; de microfoon gaat uit na elke opname.
+      *(`recorder.spec.ts` met nep-microfoon; lampje op de iPad nog na te kijken)*
+- [x] Weigert de juf de microfoon, dan verschijnt een duidelijke Nederlandse uitleg en
+      crasht er niets. *(foutvertaling getest; melding in het scherm niet visueel getest)*
 - [ ] In het spel hoort het kind de eigen opname; zonder opname het meegeleverde geluid,
-      anders de computerstem.
+      anders de computerstem. *(voorrangsregel `metOpnames` getest; geluid niet)*
 - [ ] "Nog eens luisteren" (het oor) speelt de opname opnieuw.
-- [ ] Opnames blijven na herladen en na een app-update bestaan (Dexie `version(2)`, oude
-      gegevens intact).
+- [x] Opnames blijven na herladen en na een app-update bestaan (Dexie `version(2)`, oude
+      gegevens intact). *(migratietest v1 → v2 in `opnames.spec.ts`)*
 - [ ] Werkt in Safari op iPad (audio/mp4) en in Chrome op de Mac (audio/webm).
-- [ ] Tests en productiebuild slagen; geen opnames in git.
+- [x] Tests en productiebuild slagen; geen opnames in git.
 
 ## Buiten scope (later)
 

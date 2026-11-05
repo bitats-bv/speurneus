@@ -1,0 +1,49 @@
+.vraag {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.9rem 0.25rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  &:last-child {
+    border-bottom: none;
+  }
+  &.actief {
+    background: #fff4f4;
+    border-radius: 0.8rem;
+  }
+}
+
+.tekst {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+
+.status {
+  font-size: 0.95rem;
+  color: #777;
+  white-space: nowrap;
+  &.eigen {
+    color: #1b8a3a;
+    font-weight: 600;
+  }
+}
+
+.opnemen {
+  background: #ffe1e1;
+  color: #b00020;
+  min-width: 9rem;
+  &.loopt {
+    background: #d62c2c;
+    color: #fff;
+    animation: puls 1s ease-in-out infinite;
+  }
+}
+
+@keyframes puls {
+  50% {
+    box-shadow: 0 0 0 0.5rem rgb(214 44 44 / 0.25);
+  }
+}

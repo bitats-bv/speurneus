@@ -1,0 +1,77 @@
+<header class="balk">
+  <a routerLink="/juf/stem" class="knop licht">← Thema's</a>
+  <h1>{{ thema()?.naam ?? 'Thema' }}</h1>
+  <span></span>
+</header>
+
+@if (laadFout()) {
+  <p class="fout">Dit thema kon niet geladen worden.</p>
+}
+
+<section class="kaart">
+  <p class="zacht klein">
+    Houd de iPad op een handbreedte en spreek rustig. Tik op ● om te starten en nog eens om te
+    stoppen (maximum {{ maxSeconden }} seconden).
+  </p>
+  @if (melding(); as m) {
+    <p class="fout" role="alert">{{ m }}</p>
+  }
+
+  @for (vraag of thema()?.vragen ?? []; track vraag.id) {
+    @let st = status(vraag);
+    @let opname = opnames().get(vraag.id);
+    <div class="vraag" [class.actief]="neemtOp() === vraag.id">
+      <div class="tekst">
+        <strong>{{ vraag.vraagTekst }}</strong>
+        <span class="status" [class]="st">
+          @switch (st) {
+            @case ('eigen') {
+              ✓ eigen stem · {{ ((opname?.duurMs ?? 0) / 1000).toFixed(1) }} s
+            }
+            @case ('pakket') {
+              meegeleverd geluid
+            }
+            @default {
+              computerstem
+            }
+          }
+        </span>
+      </div>
+
+      <div class="rij knoppen">
+        <button
+          class="knop opnemen"
+          [class.loopt]="neemtOp() === vraag.id"
+          [disabled]="bezig() && neemtOp() !== vraag.id"
+          (click)="opnemen(vraag)"
+        >
+          @if (neemtOp() === vraag.id) {
+            ■ Stop · {{ seconden() }} s
+          } @else if (opname) {
+            ↻ Opnieuw
+          } @else {
+            ● Opnemen
+          }
+        </button>
+        <button
+          class="knop licht"
+          [disabled]="bezig() || st === 'computer'"
+          (click)="beluister(vraag)"
+        >
+          {{ speelt() === vraag.id ? '♪' : '▶' }} Beluisteren
+        </button>
+        <button class="knop licht" [disabled]="bezig()" (click)="computerstem(vraag)">
+          {{ speelt() === vraag.id + ':computer' ? '♪' : '▶' }} Computerstem
+        </button>
+        <button
+          class="knop gevaar"
+          [disabled]="bezig() || !opname"
+          (click)="wis(vraag)"
+          aria-label="Opname wissen"
+        >
+          🗑
+        </button>
+      </div>
+    </div>
+  }
+</section>
