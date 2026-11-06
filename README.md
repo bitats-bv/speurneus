@@ -6,6 +6,9 @@ per kind, thema en periode. Alle kindgegevens blijven lokaal op de iPad (GDPR).
 
 Zie [docs/README.md](docs/README.md) voor het plan van aanpak.
 
+Online versie: <https://speurneus.pages.dev> (Cloudflare Pages, automatisch bij elke push naar
+`main`). Instellen en updaten: [docs/hosting-cloudflare.md](docs/hosting-cloudflare.md).
+
 ## Mappen
 
 | Map | Inhoud |
