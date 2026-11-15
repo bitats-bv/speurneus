@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-home',
   imports: [RouterLink],
   template: `
+    <img class="schoollogo" src="iconen/klim-op-logo.png" alt="GO! Basisschool Klim-Op" />
     <h1>Speurneus</h1>
     <nav>
       <a routerLink="/juf">Juf-beheer</a>
@@ -13,6 +14,16 @@ import { RouterLink } from '@angular/router';
     </nav>
   `,
   styles: `
+    .schoollogo {
+      display: block;
+      width: min(320px, 70vw);
+      height: auto;
+      margin: 1.5rem auto 0;
+      padding: 0.5rem 1rem;
+      background: #fff;
+      border-radius: 1rem;
+      box-sizing: content-box;
+    }
     nav {
       display: flex;
       gap: 1.5rem;
