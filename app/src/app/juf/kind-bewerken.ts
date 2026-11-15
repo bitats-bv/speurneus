@@ -10,7 +10,14 @@ import {
 } from '@angular/core';
 import type { Kind } from '../data/db';
 import { verkleinFoto } from '../data/foto';
-import { AVATARS, aantalAntwoorden, verwijderKind, wijzigKind } from '../data/klasbeheer';
+import {
+  AVATARS,
+  KLASSYMBOLEN,
+  aantalAntwoorden,
+  symboolNaam,
+  verwijderKind,
+  wijzigKind,
+} from '../data/klasbeheer';
 import { normaliseerNaam } from '../data/csv';
 import { KindAvatar } from './kind-avatar';
 
@@ -59,6 +66,21 @@ import { KindAvatar } from './kind-avatar';
 
         <fieldset>
           <legend>Avatar {{ foto() ? '(wordt gebruikt zonder foto)' : '' }}</legend>
+          <p class="subtitel">Klassymbolen</p>
+          <div class="avatars symbolen">
+            @for (s of klassymbolen; track s) {
+              <button
+                type="button"
+                class="avatar"
+                [class.gekozen]="s === avatar()"
+                (click)="avatar.set(s)"
+                [attr.aria-label]="'Symbool ' + naam(s)"
+              >
+                <img [src]="s" alt="" draggable="false" />
+              </button>
+            }
+          </div>
+          <p class="subtitel">Emoji</p>
           <div class="avatars">
             @for (a of avatars; track a) {
               <button
@@ -124,6 +146,23 @@ import { KindAvatar } from './kind-avatar';
       border: 3px solid transparent;
       background: #f6f6f6;
     }
+    .subtitel {
+      margin: 0.4rem 0 0.3rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .symbolen {
+      grid-template-columns: repeat(auto-fill, minmax(4.2rem, 1fr));
+      margin-bottom: 0.5rem;
+    }
+    .avatar img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: contain;
+      border-radius: 0.5rem;
+      background: #fff;
+    }
     .avatar.gekozen {
       border-color: #ff6600;
       background: #fff4cc;
@@ -141,6 +180,8 @@ export class KindBewerken {
   readonly klaar = output<void>();
 
   protected readonly avatars = AVATARS;
+  protected readonly klassymbolen = KLASSYMBOLEN;
+  protected readonly naam = symboolNaam;
   protected readonly voornaam = linkedSignal(() => this.kind().voornaam);
   protected readonly foto = linkedSignal<Blob | undefined>(() => this.kind().foto);
   protected readonly avatar = linkedSignal(() => this.kind().avatar ?? AVATARS[0]);

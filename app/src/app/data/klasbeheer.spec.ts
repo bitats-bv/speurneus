@@ -1,8 +1,12 @@
 import { db } from './db';
 import {
+  AVATARS,
+  KLASSYMBOLEN,
   huidigSchooljaar,
+  isKlassymbool,
   importeerKinderen,
   maakKlas,
+  symboolNaam,
   verwijderKind,
   verwijderKlas,
   voegKindToe,
@@ -92,3 +96,12 @@ async function zetAntwoord(kindId: string, id: string): Promise<void> {
     tijdstip: 0,
   });
 }
+
+describe('klassymbolen', () => {
+  it('heeft 18 unieke symbolen die als klassymbool herkend worden', () => {
+    expect(new Set(KLASSYMBOLEN).size).toBe(18);
+    expect(KLASSYMBOLEN.every(isKlassymbool)).toBe(true);
+    expect(AVATARS.some(isKlassymbool)).toBe(false);
+    expect(symboolNaam('iconen/klassymbolen/hondje.png')).toBe('hondje');
+  });
+});
