@@ -1,9 +1,10 @@
 # Cloudflare Pages: HTTP-headers voor Speurneus.
 # Dit bestand wordt mee gekopieerd naar dist/speurneus/browser/ en door Cloudflare gelezen.
 #
-# Caching: Cloudflare stuurt standaard "public, max-age=0, must-revalidate" mee.
-# Dat is wat we willen voor index.html, ngsw-worker.js, ngsw.json, manifest en themas:
-# de browser vraagt altijd na of er een nieuwe versie is, zodat updates de iPad bereiken.
+# Caching: de bestanden die zeggen wélke versie de nieuwste is (index.html, ngsw.json,
+# ngsw-worker.js, manifest) krijgen expliciet no-cache. Zo vraagt de iPad altijd na of er
+# een nieuwe versie is, ook als Cloudflare of Safari ooit een andere standaard kiest.
+# De app zelf kijkt bij openen en terugkeren of er een update is (src/app/app-update.ts).
 # Enkel bestanden met een hash in de naam mogen voor altijd gecachet worden.
 
 /*
@@ -25,5 +26,21 @@
 /styles-*.css
   Cache-Control: public, max-age=31536000, immutable
 
+/
+  Cache-Control: no-cache
+
+/index.html
+  Cache-Control: no-cache
+
+/ngsw.json
+  Cache-Control: no-cache
+
 /ngsw-worker.js
+  Cache-Control: no-cache
   Service-Worker-Allowed: /
+
+/safety-worker.js
+  Cache-Control: no-cache
+
+/manifest.webmanifest
+  Cache-Control: no-cache
