@@ -17,6 +17,14 @@
       }
     },
     {
+      "name": "klassymbolen",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": ["/iconen/klassymbolen/**"]
+      }
+    },
+    {
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",

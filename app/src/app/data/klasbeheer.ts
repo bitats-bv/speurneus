@@ -2,7 +2,39 @@ import { db, type Kind, type Klas } from './db';
 import { nieuwId } from './id';
 import { normaliseerNaam } from './csv';
 
-/** Kindvriendelijke avatars voor kinderen zonder foto. */
+/** Klassymbolen (prenten zoals aan de muur van de klas), als pad onder public/. */
+export const KLASSYMBOLEN = [
+  'appelboom',
+  'auto',
+  'bal',
+  'beer',
+  'bloem',
+  'boek',
+  'boekentas',
+  'bootje',
+  'cadeau',
+  'eendje',
+  'potlood',
+  'appel',
+  'hondje',
+  'huisje',
+  'kip',
+  'koe',
+  'konijn',
+  'maan',
+].map((naam) => `iconen/klassymbolen/${naam}.png`);
+
+/** Is deze avatar een klassymbool (afbeelding) in plaats van een emoji? */
+export function isKlassymbool(avatar: string | undefined): avatar is string {
+  return !!avatar && avatar.startsWith('iconen/klassymbolen/');
+}
+
+/** Naam van een klassymbool, bv. "hondje". */
+export function symboolNaam(avatar: string): string {
+  return avatar.replace(/^.*\//, '').replace(/\.png$/, '');
+}
+
+/** Kindvriendelijke emoji-avatars voor kinderen zonder foto. */
 export const AVATARS = [
   '🐶',
   '🐱',
@@ -50,7 +82,11 @@ export function vergelijkNamen(a: string, b: string): number {
 // ---------- Klassen ----------
 
 export async function maakKlas(naam: string, schooljaar: string): Promise<Klas> {
-  const klas: Klas = { id: nieuwId(), naam: normaliseerNaam(naam), schooljaar: schooljaar.trim() };
+  const klas: Klas = {
+    id: nieuwId(),
+    naam: normaliseerNaam(naam),
+    schooljaar: schooljaar.trim(),
+  };
   await db.klassen.add(klas);
   return klas;
 }
@@ -123,7 +159,13 @@ export async function importeerKinderen(
       gezien.add(sleutel);
       const avatar = willekeurigeAvatar(gebruikt);
       gebruikt.push(avatar);
-      await db.kinderen.add({ id: nieuwId(), klasId, voornaam: naam, avatar, actief: true });
+      await db.kinderen.add({
+        id: nieuwId(),
+        klasId,
+        voornaam: naam,
+        avatar,
+        actief: true,
+      });
       toegevoegd.push(naam);
     }
     return { toegevoegd, overgeslagen };
